@@ -16,4 +16,10 @@ UNITS = "metric"
 def buscar_clima(cidade):
     url = (f"https://api.openweathermap.org/data/2.5/weather?q={cidade}&appid={api_key}&units={UNITS}&lang={LINGUAGE}")
     resposta = requests.get(url)
-    return(resposta)
+    dados = resposta.json()
+    return({
+        "temperatura":(dados["main"]["temp"]),
+        "cidade":(dados["name"]),
+        "umidade":(dados["main"]["humidity"]),
+        "descrição":(dados["weather"][0]["description"])
+        })
