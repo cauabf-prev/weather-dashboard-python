@@ -17,9 +17,14 @@ def buscar_clima(cidade):
     url = (f"https://api.openweathermap.org/data/2.5/weather?q={cidade}&appid={api_key}&units={UNITS}&lang={LINGUAGE}")
     resposta = requests.get(url)
     dados = resposta.json()
+    status_api = resposta.status_code
+    if status_api == 404:
+        return(None)
+    
     return({
         "temperatura":(dados["main"]["temp"]),
         "cidade":(dados["name"]),
         "umidade":(dados["main"]["humidity"]),
         "descrição":(dados["weather"][0]["description"])
+        (status_api)
         })
